@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.bot_text.view.*
 import xyz.v.luffy.R
 import xyz.v.luffy.models.Chat
 
-class MessageAdapter(private val chatList:List<Chat>,val chatType:Int):RecyclerView.Adapter<MessageAdapter.mvh>() {
+class MessageAdapter(private val chatList:List<Chat>):RecyclerView.Adapter<MessageAdapter.mvh>() {
 
 
     class mvh(view: View):RecyclerView.ViewHolder(view){
@@ -43,12 +43,15 @@ class MessageAdapter(private val chatList:List<Chat>,val chatType:Int):RecyclerV
     }
 
     override fun getItemViewType(position: Int): Int {
-       when(chatType){
-           1->{ return 1 }
-           2->{ return 2}
-           3->{return 3 }
+        return when(chatList[position].isUser){
+            true->{
+                1
+            }
+            false->{
+                2
+            }
+            //3->{return 3 }
 
-       }
- return 1
+        }
     }
 }

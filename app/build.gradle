@@ -51,4 +51,7 @@ dependencies {
 
     //Material implementations
     implementation 'com.google.android.material:material:1.2.1'
+
+    //others
+    implementation 'com.airbnb.android:lottie:3.4.4'
 }

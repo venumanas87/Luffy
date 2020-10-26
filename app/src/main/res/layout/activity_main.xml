@@ -4,15 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     tools:context=".ui.MainActivity">
  <androidx.recyclerview.widget.RecyclerView
      android:layout_width="match_parent"
-     android:layout_height="wrap_content"
+     android:layout_height="match_parent"
      android:id="@+id/recyclerView"
      android:layout_above="@id/boxcont"
      />
 
+ <com.airbnb.lottie.LottieAnimationView
+     android:layout_width="60dp"
+     android:layout_height="30dp"
+     app:lottie_url="https://assets5.lottiefiles.com/datafiles/qh6Ad1yjPyivP6k/data.json"
+     app:lottie_autoPlay="true"
+     android:layout_centerHorizontal="true"
+     android:id="@+id/typing"
+     android:layout_above="@id/boxcont"
+     app:lottie_loop="true"/>
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -23,7 +32,8 @@
      android:layout_width="match_parent"
      android:layout_height="50dp"
      android:inputType="textLongMessage"
-     android:layout_marginHorizontal="15dp"
+     android:layout_marginStart="15dp"
+     android:layout_marginEnd="70dp"
      android:id="@+id/edit_query"
      android:hint="@string/type_a_message"
      android:textColorHint="@color/light_grey"
@@ -31,14 +41,15 @@
      android:background="@drawable/textboxbg"
      />
  <ImageView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
+     android:layout_width="50dp"
+     android:layout_height="50dp"
      android:src="@drawable/ic_baseline_send_24"
-     app:tint="@color/colorPrimaryDark"
+     app:tint="@color/white"
      android:layout_centerVertical="true"
      android:id="@+id/send"
-     android:layout_marginEnd="40dp"
-     android:background="?attr/selectableItemBackgroundBorderless"
+     android:layout_marginEnd="10dp"
+     android:background="@drawable/sendbg"
+     android:backgroundTint="@color/colorAccent"
      android:layout_alignParentEnd="true"/>
 </RelativeLayout>
 

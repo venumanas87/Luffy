@@ -14,8 +14,8 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Base (
 
-	@SerializedName("text") val text : String,
-	@SerializedName("intents") val intents : List<Intents>,
-	@SerializedName("entities") val entities:String
+	@SerializedName("text") val text : String="",
+	@SerializedName("intents") val intents : List<Intents> = emptyList(),
+	@SerializedName("entities") val entities:String=""
 
 )
