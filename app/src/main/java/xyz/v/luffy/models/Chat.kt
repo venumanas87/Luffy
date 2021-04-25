@@ -1,3 +1,3 @@
 package xyz.v.luffy.models
 
-data class Chat(val isUser:Boolean,val message:String)
+data class Chat(val isUser:Int,val message:String)

@@ -5,6 +5,7 @@ import android.animation.Animator
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -15,8 +16,10 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import xyz.v.luffy.R
+import xyz.v.luffy.constants.StringReplies
 import xyz.v.luffy.adapters.MessageAdapter
 import xyz.v.luffy.models.Chat
 import xyz.v.luffy.viewmodel.MessageViewModel
@@ -37,6 +41,9 @@ class MainActivity : AppCompatActivity() {
     val adapter = MessageAdapter(chatList)
     var typing:LottieAnimationView? = null
     var c = 0
+    val sr = StringReplies
+    var isIncognito = false
+    var toolbar:RelativeLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,7 +51,9 @@ class MainActivity : AppCompatActivity() {
         val editText:EditText = findViewById(R.id.edit_query)
         val vm:MessageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        toolbar = findViewById(R.id.toolbar)
         typing = findViewById(R.id.typing)
+        window.statusBarColor = ContextCompat.getColor(this,R.color.colorPrimaryDarker)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL, false
@@ -78,13 +87,13 @@ class MainActivity : AppCompatActivity() {
             val text = editText.text.toString()
             if (text.isNotBlank()){
             typing?.visibility = View.VISIBLE
-            val chat = Chat(true, text)
+            val chat = Chat(1, text)
             chatList.add(chat)
             adapter.notifyDataSetChanged()
             vm.setmessage(text)
             editText.setText("")
             }else{
-                sendfromBot("Type a valid message da!")
+                sendfromBot(sr.TYPE_VALID)
             }
 
         }
@@ -103,10 +112,24 @@ class MainActivity : AppCompatActivity() {
                     launchYoutube(base.entities)
                 }
                 "initiate" -> {
-                    sendfromBot("Hello, i am luffy your personal AI bot.You can command me to do some tasks like Play some song or Open app")
+                    sendfromBot(sr.INIT_TEXT)
+                }
+                "incognito_start" -> {
+                    if(!isIncognito) {
+                        incognitomode()
+                        sendfromBot(sr.INCOGNITO_MODE)
+                        revealIcognito()
+                    }else{
+                        publicmode()
+                        sendfromBot(sr.INCOGNITO_MODE_OFF)
+                        reveal()
+                    }
+                }
+                "get_time" ->{
+                    showTime()
                 }
                 "default" -> {
-                    sendfromBot("Sorry , i am still in training period to understand your message")
+                    sendfromBot(sr.DEFAULT)
                 }
             }
         }
@@ -119,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 reveal()
             }
             typing?.visibility = View.GONE
-            val chat = Chat(false, messg)
+            val chat = Chat(2, messg)
             val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
             chatList.add(chat)
             adapter.notifyDataSetChanged()
@@ -182,25 +205,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("AG", "launchApp: no app")
         }
     }
-    private fun openWhatsApp() {
-        val smsNumber = "919131244817" // E164 format without '+' sign
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.type = "text/plain"
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-        sendIntent.putExtra("jid", "$smsNumber@s.whatsapp.net") //phone number without "+" prefix
-        sendIntent.setPackage("com.whatsapp")
-        if (intent.resolveActivity(this.packageManager) == null) {
-            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show()
-            return
-        }
-        startActivity(sendIntent)
-    }
     companion object{
         val TAG = "MAin"
     }
 
     fun reveal(){
         val view:View = findViewById(R.id.bgCircle)
+        val view1:View = findViewById(R.id.bgCircleInc)
+        view1.visibility = View.GONE
         val cy = view.height/2
         val cx = view.width/2
         val finalrad: Double = Math.hypot(cx.toDouble(), cy.toDouble())
@@ -217,4 +229,39 @@ class MainActivity : AppCompatActivity() {
         anim.start()
     }
 
+    fun revealIcognito(){
+        val view:View = findViewById(R.id.bgCircleInc)
+        val cy = view.height/2
+        val cx = view.width/2
+        val finalrad: Double = Math.hypot(cx.toDouble(), cy.toDouble())
+        val anim:Animator = ViewAnimationUtils.createCircularReveal(view,cx,cy, 0F,
+            finalrad.toFloat()
+        )
+        val vib:Vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createOneShot(20,VibrationEffect.DEFAULT_AMPLITUDE))
+        }else{
+            vib.vibrate(20)
+        }
+        view.visibility = View.VISIBLE
+        anim.start()
+    }
+    fun incognitomode(){
+        isIncognito = true
+        window.statusBarColor = ContextCompat.getColor(this,R.color.blackDark)
+        toolbar?.background?.setTint(ContextCompat.getColor(this,R.color.blackDark))
+    }
+    fun publicmode(){
+        isIncognito = false
+        window.statusBarColor = ContextCompat.getColor(this,R.color.colorPrimaryDarker)
+        toolbar?.background?.setTint(ContextCompat.getColor(this,R.color.colorPrimaryDarker))
+    }
+    fun showTime(){
+        typing?.visibility = View.GONE
+        val chat = Chat(3,"")
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        chatList.add(chat)
+        adapter.notifyDataSetChanged()
+        recyclerView.scrollToPosition(chatList.lastIndex)
+    }
 }

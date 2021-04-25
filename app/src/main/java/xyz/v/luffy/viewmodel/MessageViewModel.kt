@@ -56,14 +56,13 @@ class MessageViewModel:ViewModel() {
                     val intensArr = mainObj.getJSONArray("intents")
                     if (intensArr.length()>0) {
                         val intentName = intensArr.getJSONObject(0).getString("name")
-
                         intentList.add(Intents(intentName))
                         val entityObj = mainObj.getJSONObject("entities")
                         when (intentName) {
                             "open_app" -> {
                                 if (entityObj.length() > 0) {
                                     val appnameArr = entityObj.getJSONArray("app_name:app_name")
-                                    val entityName = appnameArr.getJSONObject(0).getString("body")
+                                    val entityName = appnameArr.getJSONObject(0).getString("body")?:""
                                     val base =
                                         Base(mainObj.getString("text"), intentList, entityName)
                                     bse.postValue(base)
@@ -73,7 +72,7 @@ class MessageViewModel:ViewModel() {
                                     val base = Base(
                                         mainObj.getString("text"),
                                         intentList,
-                                        "deafultmessage"
+                                        ""
                                     )
                                     bse.postValue(base)
                                 }
@@ -90,10 +89,22 @@ class MessageViewModel:ViewModel() {
                                     val base = Base(
                                         mainObj.getString("text"),
                                         intentList,
-                                        "deafultmessage"
+                                        ""
                                     )
                                     bse.postValue(base)
                                 }
+                            }
+                            "incognito_start" -> {
+                                val base = Base(
+                                    mainObj.getString("text"),
+                                    intentList,
+                                    ""
+                                )
+                                bse.postValue(base)
+                            }
+                            "get_time" -> {
+                                val base = Base(mainObj.getString("text"), intentList, "")
+                                bse.postValue(base)
                             }
                             "initiate" -> {
                                 val base = Base(mainObj.getString("text"), intentList, "")
@@ -118,7 +129,7 @@ class MessageViewModel:ViewModel() {
                         val base = Base(
                             mainObj.getString("text"),
                             intentList,
-                            "deafultmessage"
+                            ""
                         )
                         bse.postValue(base)
                     }

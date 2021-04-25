@@ -15,11 +15,47 @@
      android:background="@color/colorPrimaryDark"
      android:visibility="invisible"
   />
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:id="@+id/bgCircleInc"
+     android:layout_centerInParent="true"
+     android:background="#1B1B1B"
+     android:visibility="invisible"
+     />
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="?attr/actionBarSize"
+     android:layout_marginTop="0dp"
+     android:background="@color/colorPrimaryDarker"
+     android:id="@+id/toolbar"
+     >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/luffy"
+      android:textColor="@color/white"
+      android:fontFamily="@font/questrial"
+      android:layout_centerInParent="true"
+      android:textSize="14sp"
+      />
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_baseline_more_vert_24"
+      android:layout_centerVertical="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="15dp"
+      />
+ </RelativeLayout>
  <androidx.recyclerview.widget.RecyclerView
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:id="@+id/recyclerView"
      android:layout_above="@id/boxcont"
+     android:layout_below="@id/toolbar"
      />
 
  <com.airbnb.lottie.LottieAnimationView
@@ -46,7 +82,7 @@
      android:id="@+id/edit_query"
      android:hint="@string/type_a_message"
      android:textColorHint="@color/light_grey"
-     android:textColor="@color/dark_grey"
+     android:textColor="@color/white"
      android:background="@drawable/textboxbg"
      />
  <ImageView
@@ -58,7 +94,7 @@
      android:id="@+id/send"
      android:layout_marginEnd="10dp"
      android:background="@drawable/sendbg"
-     android:backgroundTint="@color/colorAccent"
+     android:backgroundTint="#4D000000"
      android:layout_alignParentEnd="true"/>
 </RelativeLayout>
 
