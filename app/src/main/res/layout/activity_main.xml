@@ -23,32 +23,37 @@
      android:background="#1B1B1B"
      android:visibility="invisible"
      />
+
  <RelativeLayout
+     android:id="@+id/toolbar"
      android:layout_width="match_parent"
      android:layout_height="?attr/actionBarSize"
      android:layout_marginTop="0dp"
-     android:background="@color/colorPrimaryDarker"
-     android:id="@+id/toolbar"
-     >
+     android:background="@color/colorPrimaryDarker">
+
+  <ImageView
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_centerVertical="true"
+      android:layout_marginStart="10dp"
+      android:src="@mipmap/ic_launcher_foreground" />
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:fontFamily="@font/questrial"
       android:text="@string/luffy"
       android:textColor="@color/white"
-      android:fontFamily="@font/questrial"
-      android:layout_centerInParent="true"
-      android:textSize="14sp"
-      />
+      android:textSize="14sp" />
 
   <ImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:src="@drawable/ic_baseline_more_vert_24"
-      android:layout_centerVertical="true"
       android:layout_alignParentEnd="true"
+      android:layout_centerVertical="true"
       android:layout_marginEnd="15dp"
-      />
+      android:src="@drawable/ic_baseline_more_vert_24" />
  </RelativeLayout>
  <androidx.recyclerview.widget.RecyclerView
      android:layout_width="match_parent"
