@@ -7,4 +7,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="ShapeAppearanceOverlay.Card">
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
+
 </resources>

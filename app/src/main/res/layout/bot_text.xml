@@ -34,6 +34,7 @@
             android:text="9:59 am"
             android:id="@+id/timemsg"
             android:textSize="12sp"
+            android:textColor="@color/dark_grey"
             android:layout_below="@id/message"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="25dp"/>
@@ -67,6 +68,7 @@
         android:text="9:59 am"
         android:id="@+id/timemsgB"
         android:textSize="12sp"
+        android:textColor="@color/dark_grey"
         android:layout_below="@id/messageB"
         android:layout_marginStart="25dp"/>
     </RelativeLayout>
